@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<title>Hobbies</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link th:href="@{/css/hobbies.css}" rel="stylesheet" />
+<body>
+
+
+    <!-- Just an image -->
+    <nav class="navbar l-header navbar-light justify-content-between">
+        <a class="navbar-brand" href="#">
+            <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
+        </a>
+        <!--<h2 class="nav-heading">Welcome To HobbyLobby !</h2>-->
+        <div class="nav-menu" sec:authorize="isAnonymous()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/login}" >Log In</a>
+            <a class="nav-stuff" href="/" th:href="@{/register}" >Sign Up</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/dashboard}" >Welcome, <span sec:authentication="name"></span></a>
+            <a class="nav-stuff" href="/" th:href="@{/logout}">Log Out</a>
+        </div>
+    </nav>
+
+<div class="all">
+    <br><br>
+    <div style="text-align: center">
+        <div class="heading" ><b>More to Explore..</b></div><br>
+    </div>
+
+    <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; " th:if="${not #lists.isEmpty(hobbies)}">
+
+        <div th:each="hobby : ${hobbies}" class="card hob" style="width: 18rem; margin: 10px">
+            <img class="card-img-top" th:src="@{img/{image_name}.png (image_name=${hobby.name})}" alt="Card image cap">
+            <div class="card-body">
+                <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
+                <p th:text="${hobby.about}" class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="/" th:href="@{/hobbies/{hobby_id} (hobby_id=${hobby.id})}" class="click">Try this hobby</a>
+            </div>
+        </div>
+
+        
+    </div>
+    <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; text-align: center;" th:unless="${not #lists.isEmpty(hobbies)}">
+        <div style="margin: auto; margin-top: 10px; ">
+            Woah! You've tried all the hobbies till now! We're working on getting more hobbies for you! 
+        </div>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

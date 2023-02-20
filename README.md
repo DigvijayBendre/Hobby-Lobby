@@ -1,1 +1,1 @@
-# Hobby-Lobby
+# HobbyLobby

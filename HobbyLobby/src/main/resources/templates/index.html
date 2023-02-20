@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<title>Home</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link th:href="@{/css/index.css}" rel="stylesheet" />
+
+<body>
+
+
+    <!-- Just an image -->
+    <nav class="navbar l-header navbar-light justify-content-between">
+        <a class="navbar-brand" href="#">
+            <img src="../static/img/logo.png" th:src="@{/img/logo.png}" width="50" height="50" alt="">
+        </a>
+        <!--<h2 class="nav-heading">Welcome To HobbyLobby !</h2>-->
+        <div class="nav-menu" sec:authorize="isAnonymous()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/login}" >Log In</a>
+            <a class="nav-stuff" href="/" th:href="@{/register}" >Sign Up</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/dashboard}" >Welcome, <span sec:authentication="name"></span></a>
+            <a class="nav-stuff" href="/" th:href="@{/logout}">Log Out</a>
+        </div>
+    </nav>
+
+     <section class="banner">
+        <img src="/img/pic.jpg" alt="welcomeBanner">
+        <div class="left"><h1>Welcome To</h1></div>
+        <div class="right"><h1>HobbyLobby.</h1></div>
+        <h5 class="tagline">Connect. Share. Inspire. Learn.</h5>
+    </section> 
+
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">Fact of the day!</h1>
+        <p class="lead" th:text="${fact}">Elizabethan scribe Peter Bales reportedly produced a complete, handwritten copy of the Bible so small it could fit inside a walnut shell!</p>
+        <hr class="my-4">
+        <p>This hobby currently has <span th:text="${#lists.size(facthobby.users)}">10</span> users interested in it. Would you like to give this hobby a try?</p><br>
+        <p class="lead">
+            <a class="click" th:href="@{/hobbies/{hobby_id} (hobby_id=${facthobby.id})}" role="button">Try out this hobby</a>
+        </p>
+    </div>
+
+
+
+    <div class="card" style="margin: auto; margin-top: 10px; margin-bottom: 10px; text-align: center; width:20vw;" id="random-selector-button">
+        <button type="button" class="click2" onclick="randomSelector()">Randomly select a hobby</button>
+    </div>
+
+    <div class="card jumbotron" style="width: 18rem;margin: auto; display: none;" id="random-hobby">
+        <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap" id="random-img">
+        <div class="card-body">
+            <h5 class="card-title" id="random-title">Reading</h5>
+            <p class="card-text">This is the hobby we have selected for you to try. You never know when a random
+                hobby may become your favourite!</p><br>
+            <a href="#" class="click" id="random-url">Try it out</a>
+        </div>
+    </div>
+
+    <div class="card text-center" style="width: 18rem;margin: auto; display: none;" id="no-random-hobby">
+        <div class="card-body">
+            <h5 class="card-title">Oops!</h5>
+            <p class="card-text">Looks like we are out of new hobbies to select for you. Head over to the dashboard to explore the existing ones while we add more!</p>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+                            
+        var hobbies = /*[[${hobbies}]]*/;
+
+
+        /*]]>*/
+    </script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+
+</body>
+
+</html>
